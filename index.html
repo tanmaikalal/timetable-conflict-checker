@@ -1,27 +1,45 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>University Timetable Conflict Checker</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
 <h1>University Timetable Conflict Checker</h1>
 
-<p>Enter subject timings below to check conflicts.</p>
+<p>Enter subject details:</p>
 
-<label>Subject Name:</label>
-<input type="text" id="subject"><br><br>
+<label>Subject:</label>
+<input type="text" id="subject">
 
-<label>Time Slot (e.g. 9-10):</label>
-<input type="text" id="time"><br><br>
+<label>Day:</label>
+<select id="day">
+  <option>Monday</option>
+  <option>Tuesday</option>
+  <option>Wednesday</option>
+  <option>Thursday</option>
+  <option>Friday</option>
+</select>
 
-<button onclick="addClass()">Add Class</button>
+<label>Time Slot:</label>
+<select id="time">
+  <option>9-10</option>
+  <option>10-11</option>
+  <option>11-12</option>
+  <option>12-1</option>
+</select>
+
+<br><br>
+
+<button onclick="addClass()">Add to Timetable</button>
 <button onclick="checkConflicts()">Check Conflicts</button>
 
-<h2>Result:</h2>
+<h2>Timetable</h2>
+
+<table border="1" id="timetable">
+  <tr>
+    <th>Day / Time</th>
+    <th>9-10</th>
+    <th>10-11</th>
+    <th>11-12</th>
+    <th>12-1</th>
+  </tr>
+</table>
+
+<h2>Result</h2>
 <div id="output"></div>
 
 <script src="script.js"></script>
-</body>
-</html>
