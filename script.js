@@ -1,34 +1,45 @@
-// ===== DATA STRUCTURE =====
-// Graph representation
+// ===============================
+// TIMETABLE DATA STRUCTURE
+// ===============================
 let timetable = {};
 
-// ===== ADD CLASS (Greedy Scheduling) =====
+// ===============================
+// ADD CLASS (Graph Coloring Logic)
+// ===============================
 function addClass() {
   let subject = document.getElementById("subject").value;
   let day = document.getElementById("day").value;
   let time = document.getElementById("time").value;
 
+  if (!subject) {
+    document.getElementById("output").innerHTML =
+      "❌ Please enter subject name";
+    return;
+  }
+
   if (!timetable[day]) {
     timetable[day] = {};
   }
 
-  // Greedy check: assign only if free
-  if (!timetable[day][time]) {
-    timetable[day][time] = subject;
-    updateTable();
+  if (timetable[day][time]) {
     document.getElementById("output").innerHTML =
-      "✅ Class added successfully";
-  } else {
-    document.getElementById("output").innerHTML =
-      "❌ Conflict! Slot already occupied";
+      "❌ Conflict! Slot already occupied on " + day + " at " + time;
+    return;
   }
+
+  timetable[day][time] = subject;
+  updateTable();
+
+  document.getElementById("output").innerHTML =
+    "✅ Class added successfully";
 }
 
-// ===== DISPLAY TIMETABLE =====
+// ===============================
+// DISPLAY TIMETABLE
+// ===============================
 function updateTable() {
   let table = document.getElementById("timetable");
 
-  // Clear old rows
   table.innerHTML = `
     <tr>
       <th>Day / Time</th>
@@ -44,30 +55,28 @@ function updateTable() {
     ["9-10", "10-11", "11-12", "12-1"].forEach(time => {
       row += `<td>${timetable[day][time] || ""}</td>`;
     });
-    row += `</tr>`;
+    row += "</tr>";
     table.innerHTML += row;
   }
 }
 
+// ===============================
+// CHECK CONFLICTS (REAL LOGIC)
+// ===============================
 function checkConflicts() {
-  let conflictFound = false;
-
   for (let day in timetable) {
-    let usedSlots = {};
+    let seen = {};
 
     for (let time in timetable[day]) {
-      if (usedSlots[time]) {
-        conflictFound = true;
+      if (seen[time]) {
         document.getElementById("output").innerHTML =
           "❌ Conflict detected on " + day + " at " + time;
         return;
       }
-      usedSlots[time] = true;
+      seen[time] = true;
     }
   }
 
-  if (!conflictFound) {
-    document.getElementById("output").innerHTML =
-      "✅ No conflicts. Timetable is conflict-free";
-  }
+  document.getElementById("output").innerHTML =
+    "✅ No conflicts. Timetable is conflict-free";
 }
