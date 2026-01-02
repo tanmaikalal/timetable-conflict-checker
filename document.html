@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>University Timetable Conflict Checker</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+    }
+    input, select, button {
+      margin: 5px;
+      padding: 6px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 6px;
+      text-align: center;
+    }
+    #output {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>University Timetable Conflict Checker</h1>
+
+<h3>Enter Subject Details</h3>
+
+<input type="text" id="subject" placeholder="Subject Name">
+
+<select id="day">
+  <option>Monday</option>
+  <option>Tuesday</option>
+  <option>Wednesday</option>
+  <option>Thursday</option>
+  <option>Friday</option>
+</select>
+
+<select id="time">
+  <option>9-10</option>
+  <option>10-11</option>
+  <option>11-12</option>
+  <option>12-1</option>
+</select>
+
+<button onclick="addClass()">Add to Timetable</button>
+
+<h3>Timetable</h3>
+
+<table id="timetable">
+  <tr>
+    <th>Day / Time</th>
+    <th>9-10</th>
+    <th>10-11</th>
+    <th>11-12</th>
+    <th>12-1</th>
+  </tr>
+</table>
+
+<div id="output"></div>
+
+<script>
+let timetable = {};
+
+function addClass() {
+  let subject = document.getElementById("subject").value;
+  let day = document.getElementById("day").value;
+  let time = document.getElementById("time").value;
+
+  if (!subject) {
+    document.getElementById("output").innerText =
+      "❌ Please enter subject name";
+    return;
+  }
+
+  if (!timetable[day]) {
+    timetable[day] = {};
+  }
+
+  if (timetable[day][time]) {
+    document.getElementById("output").innerText =
+      "❌ Conflict! Slot already occupied";
+    return;
+  }
+
+  timetable[day][time] = subject;
+  updateTable();
+
+  document.getElementById("output").innerText =
+    "✅ Subject added successfully";
+}
+
+function updateTable() {
+  let table = document.getElementById("timetable");
+
+  table.innerHTML = `
+    <tr>
+      <th>Day / Time</th>
+      <th>9-10</th>
+      <th>10-11</th>
+      <th>11-12</th>
+      <th>12-1</th>
+    </tr>
+  `;
+
+  for (let day in timetable) {
+    let row = `<tr><td>${day}</td>`;
+    ["9-10", "10-11", "11-12", "12-1"].forEach(t => {
+      row += `<td>${timetable[day][t] || ""}</td>`;
+    });
+    row += "</tr>";
+    table.innerHTML += row;
+  }
+}
+</script>
+
+</body>
+</html>
