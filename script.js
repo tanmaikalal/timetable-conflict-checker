@@ -49,8 +49,25 @@ function updateTable() {
   }
 }
 
-// ===== CONFLICT DETECTION (Graph Coloring Logic) =====
 function checkConflicts() {
-  document.getElementById("output").innerHTML =
-    "✅ No conflicts. Timetable is conflict-free";
+  let conflictFound = false;
+
+  for (let day in timetable) {
+    let usedSlots = {};
+
+    for (let time in timetable[day]) {
+      if (usedSlots[time]) {
+        conflictFound = true;
+        document.getElementById("output").innerHTML =
+          "❌ Conflict detected on " + day + " at " + time;
+        return;
+      }
+      usedSlots[time] = true;
+    }
+  }
+
+  if (!conflictFound) {
+    document.getElementById("output").innerHTML =
+      "✅ No conflicts. Timetable is conflict-free";
+  }
 }
