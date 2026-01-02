@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>University Timetable Conflict Checker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>University Timetable Conflict Checker</h1>
+
+<p>Enter subject timings below to check conflicts.</p>
+
+<label>Subject Name:</label>
+<input type="text" id="subject"><br><br>
+
+<label>Time Slot (e.g. 9-10):</label>
+<input type="text" id="time"><br><br>
+
+<button onclick="addClass()">Add Class</button>
+<button onclick="checkConflicts()">Check Conflicts</button>
+
+<h2>Result:</h2>
+<div id="output"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
