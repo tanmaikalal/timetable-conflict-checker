@@ -60,23 +60,3 @@ function updateTable() {
   }
 }
 
-// ===============================
-// CHECK CONFLICTS (REAL LOGIC)
-// ===============================
-function checkConflicts() {
-  for (let day in timetable) {
-    let seen = {};
-
-    for (let time in timetable[day]) {
-      if (seen[time]) {
-        document.getElementById("output").innerHTML =
-          "❌ Conflict detected on " + day + " at " + time;
-        return;
-      }
-      seen[time] = true;
-    }
-  }
-
-  document.getElementById("output").innerHTML =
-    "✅ No conflicts. Timetable is conflict-free";
-}
