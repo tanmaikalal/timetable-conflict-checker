@@ -1,16 +1,12 @@
-// ===============================
-// TIMETABLE DATA STRUCTURE
-// ===============================
+
 let timetable = {};
 
-// ===============================
-// ADD CLASS (Graph Coloring Logic)
-// ===============================
+
 function addClass() {
   let subject = document.getElementById("subject").value;
   let day = document.getElementById("day").value;
 
-  // Available colors (time slots)
+  
   let slots = ["9-10", "10-11", "11-12", "12-1"];
 
   if (!subject) {
@@ -23,7 +19,7 @@ function addClass() {
     timetable[day] = {};
   }
 
-  // 🟢 GREEDY COLORING LOGIC
+ 
   for (let time of slots) {
     if (!timetable[day][time]) {
       timetable[day][time] = subject;
@@ -34,13 +30,11 @@ function addClass() {
     }
   }
 
-  // ❌ If no color (slot) available
+  
   document.getElementById("output").innerHTML =
     "❌ No available time slot for " + subject;
 }
-// ===============================
-// DISPLAY TIMETABLE
-// ===============================
+
 function updateTable() {
   let table = document.getElementById("timetable");
 
