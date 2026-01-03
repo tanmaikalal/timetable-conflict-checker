@@ -9,7 +9,9 @@ let timetable = {};
 function addClass() {
   let subject = document.getElementById("subject").value;
   let day = document.getElementById("day").value;
-  let time = document.getElementById("time").value;
+
+  // Available colors (time slots)
+  let slots = ["9-10", "10-11", "11-12", "12-1"];
 
   if (!subject) {
     document.getElementById("output").innerHTML =
@@ -21,19 +23,21 @@ function addClass() {
     timetable[day] = {};
   }
 
-  if (timetable[day][time]) {
-    document.getElementById("output").innerHTML =
-      "❌ Conflict! Slot already occupied on " + day + " at " + time;
-    return;
+  // 🟢 GREEDY COLORING LOGIC
+  for (let time of slots) {
+    if (!timetable[day][time]) {
+      timetable[day][time] = subject;
+      updateTable();
+      document.getElementById("output").innerHTML =
+        "✅ Assigned using Greedy Coloring (" + time + ")";
+      return;
+    }
   }
 
-  timetable[day][time] = subject;
-  updateTable();
-
+  // ❌ If no color (slot) available
   document.getElementById("output").innerHTML =
-    "✅ Class added successfully";
+    "❌ No available time slot for " + subject;
 }
-
 // ===============================
 // DISPLAY TIMETABLE
 // ===============================
